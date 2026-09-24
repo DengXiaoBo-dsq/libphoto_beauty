@@ -1,6 +1,6 @@
 {
   "project": "PhotoBeautyEngine",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "language": "C++17",
   "public_api": "C ABI",
   "android_target": {
@@ -13,5 +13,15 @@
     "Vulkan",
     "ncnn"
   ],
-  "mandatory_third_party_runtime": false
+  "mandatory_third_party_runtime": false,
+  "features": [
+    "render_graph",
+    "scene_analyzer",
+    "mask_processing",
+    "face_mesh_warp",
+    "edge_aware_skin",
+    "local_person_adjustment",
+    "presets",
+    "optional_ncnn_backend"
+  ]
 }

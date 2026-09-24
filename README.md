@@ -1,5 +1,7 @@
 # Photo Beauty Engine
 
+## v0.2.0 evolution build
+
 A C/C++ photo beauty core designed to be wrapped by a thin Android JNI/AAR layer.
 
 ## Current scope
@@ -121,3 +123,24 @@ pbe_destroy(engine);
                     |            |
                  Tone/HSL     Skin/Mask
 ```
+
+
+## v0.2.0 additions
+
+- RenderGraph-based effect scheduling
+- Scene analyzer for exposure/contrast/clipping/warmth/skin estimates
+- Face landmark driven inverse warp (5-point or 468-point compatible layouts)
+- Edge-aware skin smoothing and skin tone shaping
+- Person-mask local warmth/brightness/saturation
+- Built-in professional-style presets
+- Mask morphology/feather helpers
+- Optional ncnn backend seam
+
+The AI models remain external versioned assets. The v0.2 core is deliberately usable without third-party model weights.
+
+
+## Optional ncnn backend
+
+The current ncnn release page publishes Android CPU and Vulkan artifacts; for this project, prefer building the selected ncnn source against the pinned project toolchain rather than blindly embedding a prebuilt archive from a different NDK. The optional fetch script defaults to the 20260526 source tag and can be overridden for validation.
+
+See `third_party/fetch_ncnn.sh`.

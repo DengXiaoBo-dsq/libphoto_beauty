@@ -24,6 +24,8 @@ void apply_basic_tone(ImageRGBA8& image, const PBEBeautyParams& params) {
     const float contrast = params.contrast * master;
     const float highlights = params.highlights * master;
     const float shadows = params.shadows * master;
+    const float whites = params.whites * master;
+    const float blacks = params.blacks * master;
     const float saturation = params.saturation * master;
     const float vibrance = params.vibrance * master;
     const float temperature = params.temperature * master;
@@ -55,6 +57,17 @@ void apply_basic_tone(ImageRGBA8& image, const PBEBeautyParams& params) {
                 const float w = smoothstep(0.55f, 1.0f, y_l);
                 const float factor = 1.0f + highlights * 0.5f * w;
                 c.r *= factor; c.g *= factor; c.b *= factor;
+            }
+
+            if (whites != 0.0f) {
+                const float w = smoothstep(0.68f, 1.0f, y_l);
+                const float gain = 1.0f + whites * 0.65f * w;
+                c.r *= gain; c.g *= gain; c.b *= gain;
+            }
+            if (blacks != 0.0f) {
+                const float w = 1.0f - smoothstep(0.0f, 0.28f, y_l);
+                const float gain = 1.0f + blacks * 0.50f * w;
+                c.r *= gain; c.g *= gain; c.b *= gain;
             }
 
             if (shadows > 0.0f) {
@@ -131,8 +144,8 @@ void apply_vignette(ImageRGBA8& image, float amount) {
     amount = clampf(amount, 0.0f, 1.0f);
     if (amount <= 0.001f) return;
 
-    const float cx = (image.width - 1) * 0.5f;
-    const float cy = (image.height - 1) * 0.5f;
+    const float cx = static_cast<float>(image.width - 1) * 0.5f;
+    const float cy = static_cast<float>(image.height - 1) * 0.5f;
     const float invx = 1.0f / std::max(1.0f, cx);
     const float invy = 1.0f / std::max(1.0f, cy);
 

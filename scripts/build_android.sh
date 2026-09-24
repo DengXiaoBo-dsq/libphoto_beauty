@@ -8,7 +8,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BUILD="${ROOT}/build/android"
 
 ABI="${ABI:-arm64-v8a}"
-API="${API:-24}"
+API="${API:-26}"
 
 cmake -S "${ROOT}" -B "${BUILD}/${ABI}" \
   -G Ninja \

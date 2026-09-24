@@ -28,6 +28,15 @@ typedef enum PBERenderQuality {
     PBE_QUALITY_ULTRA = 2
 } PBERenderQuality;
 
+typedef enum PBEPreset {
+    PBE_PRESET_NEUTRAL = 0,
+    PBE_PRESET_NATURAL_PORTRAIT = 1,
+    PBE_PRESET_GLOW = 2,
+    PBE_PRESET_CINEMATIC = 3,
+    PBE_PRESET_FILM = 4,
+    PBE_PRESET_CLEAN = 5
+} PBEPreset;
+
 typedef struct PBEImageView {
     const uint8_t* data;
     uint8_t* mutable_data;
@@ -38,46 +47,60 @@ typedef struct PBEImageView {
 } PBEImageView;
 
 typedef struct PBELandmark {
-    float x; // normalized [0,1]
-    float y; // normalized [0,1]
+    float x;
+    float y;
     float z;
 } PBELandmark;
 
 typedef struct PBEFaceData {
     const PBELandmark* landmarks;
     size_t landmark_count;
-    const float* skin_mask;     // width*height, [0,1], optional
-    const float* person_mask;   // width*height, [0,1], optional
+    const float* skin_mask;
+    const float* person_mask;
     int32_t mask_width;
     int32_t mask_height;
 } PBEFaceData;
 
+typedef struct PBESceneStats {
+    float mean_luma;
+    float contrast;
+    float highlight_clip;
+    float shadow_clip;
+    float warm_score;
+    float skin_fraction;
+} PBESceneStats;
+
 typedef struct PBEBeautyParams {
-    float strength;             // 0..1 master strength
+    float strength;
 
-    float skin_smooth;          // 0..1
-    float skin_tone;            // -1..1
-    float skin_bright;          // -1..1
-    float blemish_reduction;    // 0..1
+    float skin_smooth;
+    float skin_tone;
+    float skin_bright;
+    float blemish_reduction;
 
-    float face_slim;            // -1..1
-    float eye_scale;            // -1..1
-    float nose_scale;           // -1..1
-    float jaw_width;            // -1..1
+    float face_slim;
+    float eye_scale;
+    float nose_scale;
+    float jaw_width;
 
-    float exposure;             // EV-ish [-4,4]
-    float contrast;             // [-1,1]
-    float highlights;           // [-1,1]
-    float shadows;              // [-1,1]
-    float temperature;          // [-1,1]
-    float tint;                 // [-1,1]
-    float saturation;            // [-1,1]
-    float vibrance;              // [-1,1]
-    float clarity;               // [-1,1]
-    float sharpen;               // [0,1]
-    float vignette;              // [0,1]
+    float exposure;
+    float contrast;
+    float highlights;
+    float shadows;
+    float whites;
+    float blacks;
+    float temperature;
+    float tint;
+    float saturation;
+    float vibrance;
+    float clarity;
+    float sharpen;
+    float vignette;
+    float grain;
 
-    float grain;                 // [0,1]
+    float local_warmth;
+    float local_brightness;
+    float local_saturation;
 } PBEBeautyParams;
 
 typedef struct PBEAutoSettings {
@@ -90,8 +113,8 @@ typedef struct PBEAutoSettings {
 typedef struct PBEConfig {
     PBERenderQuality quality;
     int32_t prefer_gpu;
-    int32_t thread_count;        // 0 = auto
-    size_t max_working_memory;   // 0 = engine default
+    int32_t thread_count;
+    size_t max_working_memory;
 } PBEConfig;
 
 #ifdef __cplusplus

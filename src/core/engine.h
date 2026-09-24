@@ -17,6 +17,8 @@ public:
     PBEStatus set_beauty(const PBEBeautyParams& params);
     PBEStatus set_auto(const PBEAutoSettings& settings);
     PBEStatus set_face_data(const PBEFaceData* face);
+    PBEStatus apply_preset(PBEPreset preset, float strength);
+    PBEStatus analyze(const PBEImageView& input, PBESceneStats* out);
 
     PBEStatus render(const PBEImageView& input, PBEImageView& output);
     PBEStatus auto_enhance();

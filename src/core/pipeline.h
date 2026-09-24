@@ -1,19 +1,14 @@
 #pragma once
-
 #include "pbe/pbe_types.h"
 #include "core/image.h"
-
+#include "core/render_graph.h"
 namespace pbe {
-
 class Pipeline {
 public:
-    PBEStatus render(
-        const ImageRGBA8& input,
-        ImageRGBA8& output,
-        const PBEBeautyParams& params,
-        const PBEFaceData* face,
-        PBERenderQuality quality
-    );
+    Pipeline();
+    PBEStatus render(const ImageRGBA8& input,ImageRGBA8& output,const PBEBeautyParams& params,const PBEFaceData* face,PBERenderQuality quality);
+private:
+    RenderGraph graph_;
+    void build_graph();
 };
-
-} // namespace pbe
+}

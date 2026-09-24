@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(PhotoBeautyEngine VERSION 0.1.0 LANGUAGES C CXX)
+project(PhotoBeautyEngine VERSION 0.2.0 LANGUAGES C CXX)
 
 option(PBE_ENABLE_VULKAN "Enable Vulkan backend when headers/libs are available" OFF)
 option(PBE_ENABLE_NCNN "Enable ncnn AI backend integration" OFF)
@@ -20,10 +20,15 @@ add_library(pbe_core OBJECT
     src/core/image.cpp
     src/core/color.cpp
     src/core/pipeline.cpp
+    src/core/render_graph.cpp
+    src/core/analyzer.cpp
     src/effects/basic.cpp
     src/effects/beauty.cpp
     src/effects/mask.cpp
-    src/effects/auto_beauty.cpp
+    src/effects/local.cpp
+    src/beauty/face_warp.cpp
+    src/beauty/skin.cpp
+    src/mask/mask.cpp
     src/ai/ai_backend.cpp
     src/gpu/gpu_backend.cpp
 )
@@ -41,14 +46,12 @@ target_compile_definitions(pbe_core PRIVATE PBE_BUILDING_LIBRARY=1)
 
 if(ANDROID)
     target_compile_definitions(pbe_core PRIVATE PBE_ANDROID=1)
-    target_link_libraries(pbe_core PRIVATE log android)
 endif()
 
 if(PBE_ENABLE_VULKAN)
     find_package(Vulkan QUIET)
     if(Vulkan_FOUND)
         target_sources(pbe_core PRIVATE src/gpu/vulkan_backend.cpp)
-        target_link_libraries(pbe_core PRIVATE Vulkan::Vulkan)
         target_compile_definitions(pbe_core PRIVATE PBE_ENABLE_VULKAN=1)
     else()
         message(FATAL_ERROR "PBE_ENABLE_VULKAN=ON but Vulkan was not found.")
@@ -57,20 +60,31 @@ endif()
 
 if(PBE_ENABLE_NCNN)
     target_compile_definitions(pbe_core PRIVATE PBE_ENABLE_NCNN=1)
+    target_sources(pbe_core PRIVATE src/ai/ncnn_backend.cpp)
     # Expected integration:
     #   ncnn_DIR=<path containing ncnnConfig.cmake>
     #   or provide NCNN_INCLUDE_DIRS / NCNN_LIBRARIES.
     find_package(ncnn CONFIG REQUIRED)
-    target_link_libraries(pbe_core PRIVATE ncnn)
 endif()
 
 if(PBE_BUILD_SHARED)
     add_library(PhotoBeautyEngine SHARED $<TARGET_OBJECTS:pbe_core>)
-    target_link_libraries(PhotoBeautyEngine PRIVATE)
     target_include_directories(PhotoBeautyEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 else()
     add_library(PhotoBeautyEngine STATIC $<TARGET_OBJECTS:pbe_core>)
     target_include_directories(PhotoBeautyEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+endif()
+
+if(ANDROID)
+    target_link_libraries(PhotoBeautyEngine PRIVATE log android)
+endif()
+
+if(PBE_ENABLE_VULKAN AND Vulkan_FOUND)
+    target_link_libraries(PhotoBeautyEngine PRIVATE Vulkan::Vulkan)
+endif()
+
+if(PBE_ENABLE_NCNN)
+    target_link_libraries(PhotoBeautyEngine PRIVATE ncnn)
 endif()
 
 set_target_properties(PhotoBeautyEngine PROPERTIES
