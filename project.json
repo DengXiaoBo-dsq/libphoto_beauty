@@ -1,0 +1,17 @@
+{
+  "project": "PhotoBeautyEngine",
+  "version": "0.1.1",
+  "language": "C++17",
+  "public_api": "C ABI",
+  "android_target": {
+    "min_api": 24,
+    "primary_abi": "arm64-v8a",
+    "ndk": "27.2.12479018",
+    "ndk_revision": "r27c"
+  },
+  "optional_backends": [
+    "Vulkan",
+    "ncnn"
+  ],
+  "mandatory_third_party_runtime": false
+}

@@ -1,0 +1,15 @@
+# ninja log v6
+1	255	1790219832092213733	CMakeFiles/pbe_core.dir/src/api/pbe_api.cpp.o	7fd80ee8a85f6c79
+1	372	1790219832097997102	CMakeFiles/pbe_core.dir/src/core/engine.cpp.o	261fb1664a3c38f1
+255	373	1790219832351848883	CMakeFiles/pbe_core.dir/src/core/image.cpp.o	6b507b35c8412685
+373	542	1790219832469559591	CMakeFiles/pbe_core.dir/src/core/pipeline.cpp.o	edd18dc7d92df208
+372	564	1790219832465746249	CMakeFiles/pbe_core.dir/src/core/color.cpp.o	8254a0c4e5319c56
+543	893	1790219832638839477	CMakeFiles/pbe_core.dir/src/effects/basic.cpp.o	eba8973670f4bdfc
+564	921	1790219832656225482	CMakeFiles/pbe_core.dir/src/effects/beauty.cpp.o	f599a831cafa2154
+894	977	1790219832989064544	CMakeFiles/pbe_core.dir/src/effects/mask.cpp.o	800c691d95d9d53a
+977	991	1790219833073297523	CMakeFiles/pbe_core.dir/src/ai/ai_backend.cpp.o	59d1c35e6254b9d0
+921	1101	1790219833017429618	CMakeFiles/pbe_core.dir/src/effects/auto_beauty.cpp.o	db1e0975ec2213a0
+991	1109	1790219833087387362	CMakeFiles/pbe_core.dir/src/gpu/gpu_backend.cpp.o	2473c3bfd9894784
+1109	1160	1790219833205472666	libphoto_beauty.so	d3e22d9fb8bac54a
+1101	1248	1790219833197654355	CMakeFiles/pbe_tests.dir/tests/test_main.cpp.o	74474baded135585
+1248	1293	1790219833343852376	pbe_tests	f66821dc55d99377
