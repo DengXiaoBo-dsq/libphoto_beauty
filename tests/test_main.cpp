@@ -90,6 +90,21 @@ int main() {
     params.local_brightness = 0.10f;
     params.sharpen = 0.08f;
     assert(pbe_set_beauty_params(h, &params) == PBE_OK);
+
+    PBEAdvancedColor color{};
+    assert(pbe_get_advanced_color(h, &color) == PBE_OK);
+    color.curve[0] = 0.04f;
+    color.curve[16] = 0.96f;
+    color.saturation[PBE_HSL_BLUE] = 0.25f;
+    assert(pbe_set_advanced_color(h, &color) == PBE_OK);
+
+    // AI provider ABI smoke test: provider may decline detection without failing render.
+    PBEAIProvider provider{};
+    provider.analyze = [](void*, const uint8_t*, int32_t, int32_t, PBEFaceData* out_face) -> int {
+        if (out_face) *out_face = PBEFaceData{};
+        return -1;
+    };
+    assert(pbe_set_ai_provider(h, &provider) == PBE_OK);
     assert(pbe_render_rgba8(h, &in, &out) == PBE_OK);
 
     bool changed = false;

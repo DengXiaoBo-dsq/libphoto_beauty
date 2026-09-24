@@ -144,3 +144,16 @@ The AI models remain external versioned assets. The v0.2 core is deliberately us
 The current ncnn release page publishes Android CPU and Vulkan artifacts; for this project, prefer building the selected ncnn source against the pinned project toolchain rather than blindly embedding a prebuilt archive from a different NDK. The optional fetch script defaults to the 20260526 source tag and can be overridden for validation.
 
 See `third_party/fetch_ncnn.sh`.
+
+
+## v0.3
+
+Adds a 17-point master curve, eight-sector HSL, shadow/highlight grading, AI provider ABI, and row-parallel execution.
+The CPU path is a deterministic reference implementation; production top-tier image quality still requires trained segmentation/face/restoration models and the finalized Vulkan/NPU passes.
+
+
+## ncnn compatibility
+
+The project keeps NDK r27c as its Android toolchain. The helper script pins ncnn to 20241226 by default,
+matching the Android r27c build line. Newer ncnn releases can be selected explicitly after validating
+with the project's NDK and ABI settings.

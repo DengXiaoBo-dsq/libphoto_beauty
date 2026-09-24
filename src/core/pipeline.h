@@ -6,7 +6,7 @@ namespace pbe {
 class Pipeline {
 public:
     Pipeline();
-    PBEStatus render(const ImageRGBA8& input,ImageRGBA8& output,const PBEBeautyParams& params,const PBEFaceData* face,PBERenderQuality quality);
+    PBEStatus render(const ImageRGBA8& input,ImageRGBA8& output,const PBEBeautyParams& params,const PBEFaceData* face,const PBEAdvancedColor& color,PBERenderQuality quality,int threads);
 private:
     RenderGraph graph_;
     void build_graph();

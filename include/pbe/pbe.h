@@ -11,6 +11,9 @@ void pbe_destroy(PBEHandle handle);
 PBEStatus pbe_reset(PBEHandle handle);
 
 PBEStatus pbe_set_beauty_params(PBEHandle handle, const PBEBeautyParams* params);
+PBEStatus pbe_set_advanced_color(PBEHandle handle, const PBEAdvancedColor* params);
+PBEStatus pbe_get_advanced_color(PBEHandle handle, PBEAdvancedColor* out_params);
+PBEStatus pbe_set_ai_provider(PBEHandle handle, const PBEAIProvider* provider);
 PBEStatus pbe_get_beauty_params(PBEHandle handle, PBEBeautyParams* out_params);
 PBEStatus pbe_apply_preset(PBEHandle handle, PBEPreset preset, float strength);
 

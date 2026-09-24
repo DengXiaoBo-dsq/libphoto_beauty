@@ -1,10 +1,10 @@
 {
   "project": "PhotoBeautyEngine",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "language": "C++17",
   "public_api": "C ABI",
   "android_target": {
-    "min_api": 24,
+    "min_api": 26,
     "primary_abi": "arm64-v8a",
     "ndk": "27.2.12479018",
     "ndk_revision": "r27c"
@@ -13,15 +13,5 @@
     "Vulkan",
     "ncnn"
   ],
-  "mandatory_third_party_runtime": false,
-  "features": [
-    "render_graph",
-    "scene_analyzer",
-    "mask_processing",
-    "face_mesh_warp",
-    "edge_aware_skin",
-    "local_person_adjustment",
-    "presets",
-    "optional_ncnn_backend"
-  ]
+  "mandatory_third_party_runtime": false
 }

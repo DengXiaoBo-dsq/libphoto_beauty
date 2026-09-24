@@ -1,20 +1,6 @@
-# C API
+# API v0.3
 
-The ABI is intentionally C-compatible so Kotlin/Java only needs a thin JNI layer.
+Public header: `include/pbe/pbe.h`.
 
-```c
-PBEHandle engine;
-PBEConfig cfg = { PBE_QUALITY_HIGH, 1, 0, 0 };
-pbe_create(&cfg, &engine);
-
-PBEBeautyParams p;
-pbe_get_beauty_params(engine, &p);
-p.skin_smooth = 0.20f;
-p.face_slim = 0.08f;
-pbe_set_beauty_params(engine, &p);
-
-pbe_render_rgba8(engine, &input, &output);
-pbe_destroy(engine);
-```
-
-`PBEFaceData` can supply a dense face landmark array plus learned masks. The engine does not own those buffers.
+Added `pbe_set_advanced_color`, `pbe_get_advanced_color`, and `pbe_set_ai_provider`.
+The provider's returned mask/landmark buffers must remain valid until the enclosing call returns.

@@ -28,6 +28,12 @@ typedef enum PBERenderQuality {
     PBE_QUALITY_ULTRA = 2
 } PBERenderQuality;
 
+typedef enum PBEHSLChannel {
+    PBE_HSL_RED = 0, PBE_HSL_ORANGE = 1, PBE_HSL_YELLOW = 2, PBE_HSL_GREEN = 3,
+    PBE_HSL_AQUA = 4, PBE_HSL_BLUE = 5, PBE_HSL_PURPLE = 6, PBE_HSL_MAGENTA = 7,
+    PBE_HSL_CHANNEL_COUNT = 8
+} PBEHSLChannel;
+
 typedef enum PBEPreset {
     PBE_PRESET_NEUTRAL = 0,
     PBE_PRESET_NATURAL_PORTRAIT = 1,
@@ -109,6 +115,25 @@ typedef struct PBEAutoSettings {
     int32_t enable_auto_beauty;
     int32_t enable_auto_sharpen;
 } PBEAutoSettings;
+
+typedef struct PBEAdvancedColor {
+    float curve[17];
+    float hue[PBE_HSL_CHANNEL_COUNT];
+    float saturation[PBE_HSL_CHANNEL_COUNT];
+    float luminance[PBE_HSL_CHANNEL_COUNT];
+    float color_grading_shadows_h;
+    float color_grading_shadows_s;
+    float color_grading_shadows_l;
+    float color_grading_highlights_h;
+    float color_grading_highlights_s;
+    float color_grading_highlights_l;
+    float color_grading_balance;
+} PBEAdvancedColor;
+
+typedef struct PBEAIProvider {
+    void* user_data;
+    int (*analyze)(void* user_data, const uint8_t* rgba, int32_t width, int32_t height, PBEFaceData* out_face);
+} PBEAIProvider;
 
 typedef struct PBEConfig {
     PBERenderQuality quality;

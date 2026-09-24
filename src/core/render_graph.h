@@ -10,6 +10,8 @@ struct RenderContext {
     ImageRGBA8* image = nullptr;
     const PBEBeautyParams* params = nullptr;
     const PBEFaceData* face = nullptr;
+    const PBEAdvancedColor* advanced_color = nullptr;
+    int threads = 0;
     PBERenderQuality quality = PBE_QUALITY_HIGH;
 };
 

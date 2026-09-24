@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Pinning by source tag avoids coupling the engine to a prebuilt NDK version.
-# Override NCNN_TAG to update after validating with the project's NDK.
-NCNN_TAG="${NCNN_TAG:-20260526}"
+# ncnn 20241226 is the maintained Android release in this project line that
+# explicitly used android-ndk-r27c for its prebuilt Android packages.
+NCNN_TAG="${NCNN_TAG:-20241226}"
 DEST="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/ncnn"
 
 if [[ -d "${DEST}/.git" ]]; then

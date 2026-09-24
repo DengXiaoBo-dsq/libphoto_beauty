@@ -22,15 +22,19 @@ add_library(pbe_core OBJECT
     src/core/pipeline.cpp
     src/core/render_graph.cpp
     src/core/analyzer.cpp
+    src/core/parallel.cpp
+    src/core/curves.cpp
     src/effects/basic.cpp
     src/effects/beauty.cpp
     src/effects/mask.cpp
     src/effects/local.cpp
+    src/effects/advanced_color.cpp
     src/beauty/face_warp.cpp
     src/beauty/skin.cpp
     src/mask/mask.cpp
     src/ai/ai_backend.cpp
     src/gpu/gpu_backend.cpp
+    src/gpu/vulkan_context.cpp
 )
 
 target_include_directories(pbe_core
@@ -61,10 +65,20 @@ endif()
 if(PBE_ENABLE_NCNN)
     target_compile_definitions(pbe_core PRIVATE PBE_ENABLE_NCNN=1)
     target_sources(pbe_core PRIVATE src/ai/ncnn_backend.cpp)
-    # Expected integration:
-    #   ncnn_DIR=<path containing ncnnConfig.cmake>
-    #   or provide NCNN_INCLUDE_DIRS / NCNN_LIBRARIES.
-    find_package(ncnn CONFIG REQUIRED)
+
+    set(PBE_NCNN_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/ncnn" CACHE PATH
+        "Path to the ncnn source tree")
+
+    if(EXISTS "${PBE_NCNN_SOURCE_DIR}/CMakeLists.txt")
+        set(NCNN_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+        set(NCNN_BUILD_BENCHMARK OFF CACHE BOOL "" FORCE)
+        set(NCNN_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+        add_subdirectory("${PBE_NCNN_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/third_party/ncnn" EXCLUDE_FROM_ALL)
+        target_link_libraries(pbe_core PRIVATE ncnn)
+    else()
+        find_package(ncnn CONFIG REQUIRED)
+        target_link_libraries(pbe_core PRIVATE ncnn)
+    endif()
 endif()
 
 if(PBE_BUILD_SHARED)
@@ -83,9 +97,7 @@ if(PBE_ENABLE_VULKAN AND Vulkan_FOUND)
     target_link_libraries(PhotoBeautyEngine PRIVATE Vulkan::Vulkan)
 endif()
 
-if(PBE_ENABLE_NCNN)
-    target_link_libraries(PhotoBeautyEngine PRIVATE ncnn)
-endif()
+
 
 set_target_properties(PhotoBeautyEngine PROPERTIES
     OUTPUT_NAME "photo_beauty"
