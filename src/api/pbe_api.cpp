@@ -13,6 +13,10 @@ PBEStatus pbe_get_beauty_params(PBEHandle h,PBEBeautyParams*out){if(!h||!out)ret
 PBEStatus pbe_apply_preset(PBEHandle h,PBEPreset preset,float strength){return h?reinterpret_cast<pbe::Engine*>(h)->apply_preset(preset,strength):PBE_INVALID_ARGUMENT;}
 PBEStatus pbe_set_auto_settings(PBEHandle h,const PBEAutoSettings*s){return(!h||!s)?PBE_INVALID_ARGUMENT:reinterpret_cast<pbe::Engine*>(h)->set_auto(*s);}
 PBEStatus pbe_set_face_data(PBEHandle h,const PBEFaceData*f){return h?reinterpret_cast<pbe::Engine*>(h)->set_face_data(f):PBE_INVALID_ARGUMENT;}
+PBEStatus pbe_set_geometry(PBEHandle h,const PBEGeometryParams*p){return(!h||!p)?PBE_INVALID_ARGUMENT:reinterpret_cast<pbe::Engine*>(h)->set_geometry(*p);}
+PBEStatus pbe_set_body_data(PBEHandle h,const PBEBodyData*p){return h?reinterpret_cast<pbe::Engine*>(h)->set_body_data(p):PBE_INVALID_ARGUMENT;}
+PBEStatus pbe_set_heal_points(PBEHandle h,const PBEHealPoint*p,size_t c){return h?reinterpret_cast<pbe::Engine*>(h)->set_heal_points(p,c):PBE_INVALID_ARGUMENT;}
+PBEStatus pbe_clear_heal_points(PBEHandle h){return h?reinterpret_cast<pbe::Engine*>(h)->clear_heal_points():PBE_INVALID_ARGUMENT;}
 PBEStatus pbe_analyze_rgba8(PBEHandle h,const PBEImageView*i,PBESceneStats*out){return(!h||!i||!out)?PBE_INVALID_ARGUMENT:reinterpret_cast<pbe::Engine*>(h)->analyze(*i,out);}
 PBEStatus pbe_auto_enhance(PBEHandle h){return h?reinterpret_cast<pbe::Engine*>(h)->auto_enhance():PBE_INVALID_ARGUMENT;}
 PBEStatus pbe_render_rgba8(PBEHandle h,const PBEImageView*i,PBEImageView*o){return(!h||!i||!o)?PBE_INVALID_ARGUMENT:reinterpret_cast<pbe::Engine*>(h)->render(*i,*o);}

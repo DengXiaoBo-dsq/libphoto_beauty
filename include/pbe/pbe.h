@@ -1,5 +1,6 @@
 #pragma once
 #include "pbe_types.h"
+#include "pbe_geometry.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

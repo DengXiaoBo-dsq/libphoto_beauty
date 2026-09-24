@@ -1,36 +1,24 @@
-# Roadmap to commercial-grade quality
+# Roadmap
 
-## v0.2 (this package)
-- C ABI and C++17 core
-- RenderGraph
-- scene analysis
-- presets
-- mask operators
-- face landmark radial warp
-- edge-aware skin processing
-- optional ncnn seam
-
-## v0.3
-- production Vulkan render graph and persistent GPU resources
-- model registry and ncnn execution backend
-- dense face mesh adapter
-- learned skin/person/hair masks
-
-## v0.4
-- mesh-based face deformation with boundary constraints
-- eye/nose/mouth region warps
-- body mesh and pose-aware deformation
-- blemish/heal pipeline
+## v0.4 (current)
+- constrained face geometry
+- body geometry
+- explicit healing pipeline
 
 ## v0.5
-- face restoration + denoise + super resolution
-- HDR / wide-gamut / 10-bit path
-- camera zero-copy path where supported
+- real ncnn model registry and execution
+- dense face mesh adapter
+- learned skin/person/hair masks
+- face restoration, denoise, super-resolution
+- HDR/wide-gamut/10-bit path
+
+## v0.6
+- production Vulkan render graph with persistent GPU resources
+- Android Hardware Buffer / zero-copy paths where supported
+- device capability tiers and runtime scheduling
 
 ## v1.0
-- visual regression suite across devices
-- memory/latency budgets
 - ABI stability policy
-- release packaging and Android AAR helper
-
-The version boundary is based on validated image quality and performance, not line count.
+- visual regression corpus
+- Android AAR integration helper
+- release packaging and benchmarks

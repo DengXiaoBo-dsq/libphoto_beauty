@@ -146,7 +146,7 @@ The current ncnn release page publishes Android CPU and Vulkan artifacts; for th
 See `third_party/fetch_ncnn.sh`.
 
 
-## v0.3
+## v0.4
 
 Adds a 17-point master curve, eight-sector HSL, shadow/highlight grading, AI provider ABI, and row-parallel execution.
 The CPU path is a deterministic reference implementation; production top-tier image quality still requires trained segmentation/face/restoration models and the finalized Vulkan/NPU passes.
@@ -157,3 +157,17 @@ The CPU path is a deterministic reference implementation; production top-tier im
 The project keeps NDK r27c as its Android toolchain. The helper script pins ncnn to 20241226 by default,
 matching the Android r27c build line. Newer ncnn releases can be selected explicitly after validating
 with the project's NDK and ABI settings.
+
+
+## v0.4
+
+The v0.4 pipeline adds constrained face/body geometry and a soft healing pass. Geometry is
+mask-aware when person/face masks are supplied and is parallelized by image rows. The new
+operations are exposed through additive C ABI functions so existing v0.3 callers remain usable.
+
+
+### Build verification
+
+The reference desktop build is compiled with warnings-as-information flags and the native test suite
+verifies create/reset, render, advanced color, face data, geometry, body data, heal-point edge cases,
+and exported C symbols. Android remains pinned to NDK r27c / 27.2.12479018.

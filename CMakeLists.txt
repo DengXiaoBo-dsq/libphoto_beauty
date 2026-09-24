@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(PhotoBeautyEngine VERSION 0.2.0 LANGUAGES C CXX)
+project(PhotoBeautyEngine VERSION 0.4.0 LANGUAGES C CXX)
 
 option(PBE_ENABLE_VULKAN "Enable Vulkan backend when headers/libs are available" OFF)
 option(PBE_ENABLE_NCNN "Enable ncnn AI backend integration" OFF)
@@ -29,7 +29,9 @@ add_library(pbe_core OBJECT
     src/effects/mask.cpp
     src/effects/local.cpp
     src/effects/advanced_color.cpp
+    src/effects/heal.cpp
     src/beauty/face_warp.cpp
+    src/beauty/geometry.cpp
     src/beauty/skin.cpp
     src/mask/mask.cpp
     src/ai/ai_backend.cpp

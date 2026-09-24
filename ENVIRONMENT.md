@@ -5,7 +5,7 @@
 - Android SDK platform 35+
 - CMake 3.22+
 - Ninja
-- Android NDK r27c: 27.2.12479018
+- Android Android NDK r27c: 27.2.12479018
 - Primary ABI: arm64-v8a
 - API floor: 26
 - C++: C++17
@@ -25,10 +25,12 @@
 ./scripts/build_desktop.sh
 
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-export ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/27.2.12479018
+export ANDROID_Android NDK_HOME=$ANDROID_SDK_ROOT/ndk/27.2.12479018
 ./scripts/build_android.sh
 
 # Optional ncnn source
 ./third_party/fetch_ncnn.sh
 cmake -S . -B build/android -DPBE_ENABLE_NCNN=ON
 ```
+
+Pinned native toolchain: Android NDK r27c (27.2.12479018), primary ABI arm64-v8a.

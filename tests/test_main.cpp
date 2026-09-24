@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <vector>
+#include <cmath>
 
 static void fill_test_image(std::vector<uint8_t>& img, int w, int h) {
     for (int y = 0; y < h; ++y) {
@@ -105,7 +106,25 @@ int main() {
         return -1;
     };
     assert(pbe_set_ai_provider(h, &provider) == PBE_OK);
-    assert(pbe_render_rgba8(h, &in, &out) == PBE_OK);
+    PBEGeometryParams gp{};
+gp.face_slim = 0.08f;
+gp.eye_scale = 0.06f;
+gp.nose_scale = -0.04f;
+assert(pbe_set_geometry(h, &gp) == PBE_OK);
+PBEHealPoint hp{0.50f, 0.50f, 0.03f, 0.4f};
+assert(pbe_set_heal_points(h, &hp, 1) == PBE_OK);
+assert(pbe_set_heal_points(h, nullptr, 0) == PBE_OK);
+PBELandmark face_points[5] = {
+    {0.35f,0.44f,0}, {0.65f,0.44f,0}, {0.50f,0.53f,0},
+    {0.50f,0.66f,0}, {0.50f,0.77f,0}
+};
+PBEFaceData fd{};
+fd.landmarks = face_points;
+fd.landmark_count = 5;
+assert(pbe_set_face_data(h, &fd) == PBE_OK);
+assert(pbe_render_rgba8(h, &in, &out) == PBE_OK);
+
+assert(pbe_render_rgba8(h, &in, &out) == PBE_OK);
 
     bool changed = false;
     for (size_t i = 0; i < input.size(); ++i) {
@@ -114,7 +133,27 @@ int main() {
     assert(changed);
 
     assert(pbe_reset(h) == PBE_OK);
-    pbe_destroy(h);
+    PBEPosePoint pose_points[12] = {};
+pose_points[0] = {0.50f,0.18f,1.0f};
+pose_points[1] = {0.40f,0.30f,1.0f};
+pose_points[2] = {0.60f,0.30f,1.0f};
+pose_points[7] = {0.44f,0.56f,1.0f};
+pose_points[8] = {0.56f,0.56f,1.0f};
+pose_points[9] = {0.44f,0.78f,1.0f};
+pose_points[10] = {0.56f,0.78f,1.0f};
+pose_points[11] = {0.50f,0.90f,1.0f};
+PBEBodyData bd{};
+bd.points = pose_points;
+bd.point_count = 12;
+PBEGeometryParams bg{};
+bg.body_slim = 0.05f;
+bg.waist = 0.06f;
+assert(pbe_set_geometry(h, &bg) == PBE_OK);
+assert(pbe_set_body_data(h, &bd) == PBE_OK);
+assert(pbe_render_rgba8(h, &in, &out) == PBE_OK);
+assert(pbe_set_body_data(h, nullptr) == PBE_OK);
+
+pbe_destroy(h);
 
     std::puts("PhotoBeautyEngine v0.2 tests passed.");
     return 0;

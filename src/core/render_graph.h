@@ -1,9 +1,11 @@
 #pragma once
 #include "core/image.h"
 #include "pbe/pbe_types.h"
+#include "pbe/pbe_geometry.h"
 #include <string>
 #include <vector>
 #include <functional>
+#include <vector>
 
 namespace pbe {
 struct RenderContext {
@@ -11,6 +13,9 @@ struct RenderContext {
     const PBEBeautyParams* params = nullptr;
     const PBEFaceData* face = nullptr;
     const PBEAdvancedColor* advanced_color = nullptr;
+    const PBEGeometryParams* geometry = nullptr;
+    const PBEBodyData* body = nullptr;
+    const std::vector<PBEHealPoint>* heal_points = nullptr;
     int threads = 0;
     PBERenderQuality quality = PBE_QUALITY_HIGH;
 };
